@@ -1,0 +1,6 @@
+<h1>Listagem de Produtos</h1>
+<ol>
+    {% for produto in produtos %}
+        <li><a href="/lojas/{{ produto.id }}/">{{ produto.nome }} ({{ produto.quantidade }})</a></li>
+    {% endfor %}
+</ol>
