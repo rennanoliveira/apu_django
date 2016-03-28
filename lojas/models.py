@@ -11,12 +11,17 @@ class Produto(models.Model):
 
 
 class Carrinho(models.Model):
+    def adicionar_produto(self, produto, quantidade):
+        item = ItemCarrinho(carrinho=self, produto=produto, quantidade=quantidade)
+        item.save()
+        return item
+
     def __str__(self):
         return self.id
 
 
 class ItemCarrinho(models.Model):
-    carrinho = models.ForeignKey(Carrinho, on_delete=models.CASCADE)
+    carrinho = models.ForeignKey(Carrinho, on_delete=models.CASCADE, related_name="itens_carrinho")
     produto = models.ForeignKey(Produto, on_delete=models.CASCADE)
     quantidade = models.IntegerField(default=1)
     def __str__(self):

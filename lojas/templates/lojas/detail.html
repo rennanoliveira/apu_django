@@ -1,0 +1,13 @@
+<h1>Detalhes do produto</h1>
+<p><b>Nome:</b> {{ produto.nome }}</p>
+<p><b>Quantidade disponível:</b> {{ produto.quantidade }}</p>
+
+<h2>Comprar Produto:</h2>
+{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+
+<form action="{% url 'lojas:add_produto' produto.id %}" method="post">
+    {% csrf_token %}
+    <label for="quantidade">Quantidade Desejada:</label>
+    <input type="number" name="quantidade" id="quantidade" value="1"/>
+    <input type="submit" value="Adicionar ao Carrinho"/>
+</form>

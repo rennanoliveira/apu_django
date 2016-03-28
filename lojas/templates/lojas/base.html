@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>{% block title %}Lojinha do Apu{% endblock %}</title>
+</head>
+
+<body>
+    <div id="sidebar">
+        {% block sidebar %}
+        <h1>Apu's Kwik-E-Mart</h1>
+        <nav>
+            <a href="{%  url 'lojas:index'%}">Produtos</a> |
+        <a href="{%  url 'lojas:carrinho'%}">Carrinho</a> |
+        <a href="{%  url 'lojas:pedidos'%}">Pedidos</a> |
+        </nav>
+
+        {% endblock %}
+    </div>
+
+    <div id="content">
+        {% block content %}{% endblock %}
+    </div>
+</body>
+</html>
