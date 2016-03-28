@@ -32,10 +32,15 @@ def carrinho(request):
 
 def finalizar_compra(request):
     carrinho = Carrinho.objects.get(pk=1)
-    CriadorPedido(carrinho).save()
-    return HttpResponseRedirect(reverse('lojas:pedidos'))
+    criador_pedido = CriadorPedido(carrinho)
+
+    if criador_pedido.save():
+        return HttpResponseRedirect(reverse('lojas:pedidos'))
+    else:
+        msg = "Nao foi possivel fechar a compra %s" % criador_pedido.string_errors()
+        return render(request, 'lojas/carrinho.html', {'itens': carrinho.itens_carrinho.all(), 'msg': msg})
 
 
 def pedidos(request):
-    pedidos = Pedido.objects.all()
-    return render(request, 'lojas/pedidos/index.html', {'pedidos': pedidos})
+    pedidos_usuario = Pedido.objects.all()
+    return render(request, 'lojas/pedidos/index.html', {'pedidos': pedidos_usuario})

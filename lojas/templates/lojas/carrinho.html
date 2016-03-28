@@ -4,6 +4,7 @@
 
 {% block content %}
     <h1>Meu Carrinho</h1>
+    <p style="color:red">{{ msg }}</p>
     <ol>
         {% for item in itens %}
             <li> Produto: {{ item.produto.nome }}, Quantidade: {{ item.quantidade }}</li>

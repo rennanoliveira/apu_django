@@ -1,10 +1,13 @@
 from .models import Pedido, Produto, ItemPedido
-
+from django.db import transaction
 
 class CriadorPedido:
     def __init__(self, carrinho):
         self.carrinho = carrinho
         self.errors = []
+
+    def string_errors(self):
+        return ', '.join(self.errors)
 
     def save(self):
         itens_no_carrinho = self.carrinho.itens_carrinho.all()
@@ -21,13 +24,14 @@ class CriadorPedido:
         return len(self.errors) == 0
 
     def fechar_pedido(self, itens):
-        pedido = Pedido()
-        pedido.save()
-        for item in itens:
-            produto = item.produto
-            item_pedido = ItemPedido(pedido=pedido, produto=produto, quantidade=item.quantidade)
-            item_pedido.save()
-            produto.remover_estoque(item.quantidade)
-        self.carrinho.limpar()
-        pedido.save()
+        with transaction.atomic():
+            pedido = Pedido()
+            pedido.save()
+            for item in itens:
+                produto = item.produto
+                item_pedido = ItemPedido(pedido=pedido, produto=produto, quantidade=item.quantidade)
+                item_pedido.save()
+                item.delete()
+                produto.remover_estoque(item.quantidade)
+            pedido.save()
         return True

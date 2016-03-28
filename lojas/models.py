@@ -28,9 +28,6 @@ class Carrinho(models.Model):
     def qtd_itens(self):
         return self.itens_carrinho.count()
 
-    def limpar(self):
-        self.itemcarrinho_set.remove(self.itens_carrinho.all())
-
     def custo_total(self):
         total = float(0)
         for item in self.itens_carrinho.all():
@@ -38,7 +35,6 @@ class Carrinho(models.Model):
         return float(total)
 
     def __str__(self):
-        # return "%01.2f" % self.custo_total()
         return "(id: %d) %d produtos, total: R$ %s" % (self.id, self.qtd_itens(), ("%01.2f" % self.custo_total()))
 
 
@@ -70,7 +66,7 @@ class Pedido(models.Model):
 class ItemPedido(models.Model):
     pedido = models.ForeignKey(Pedido, on_delete=models.CASCADE, related_name="itens_pedido")
     produto = models.ForeignKey(Produto, on_delete=models.CASCADE)
-    quandidade = models.IntegerField(default=1)
+    quantidade = models.IntegerField(default=1)
 
     def __str__(self):
         return "Pedido %d: %d produtos, total: R$ %s" % (self.id, self.qtd_itens(), ("%01.2f" % self.custo_total()))
