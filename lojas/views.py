@@ -2,6 +2,7 @@ from django.shortcuts import render, get_object_or_404
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect, HttpResponse
 from .models import Produto, Carrinho, Pedido
+from .helpers import CriadorPedido
 
 
 def index(request):
@@ -19,7 +20,7 @@ def add_produto(request, produto_id):
     produto = get_object_or_404(Produto, pk=produto_id)
     carrinho = Carrinho.objects.get(pk=1)
     quantidade = request.POST['quantidade']
-    adicionado = carrinho.adicionar_produto(produto, quantidade)
+    carrinho.adicionar_produto(produto, quantidade)
     return HttpResponseRedirect(reverse('lojas:carrinho'))
 
 
@@ -31,8 +32,8 @@ def carrinho(request):
 
 def finalizar_compra(request):
     carrinho = Carrinho.objects.get(pk=1)
-    pedido = carrinho.finalizar_compra()
-    return render(request, 'lojas/pedidos/detail.html', {'pedido': pedido})
+    CriadorPedido(carrinho).save()
+    return HttpResponseRedirect(reverse('lojas:pedidos'))
 
 
 def pedidos(request):

@@ -1,0 +1,12 @@
+{% extends "lojas/base.html" %}
+
+{% block title %}Lojinha - Carrinho{% endblock %}
+
+{% block content %}
+<h1>Meus Pedidos</h1>
+<ol>
+    {% for pedido in pedidos %}
+        <li> {{ pedido }}</li>
+    {% endfor %}
+</ol>
+{% endblock %}

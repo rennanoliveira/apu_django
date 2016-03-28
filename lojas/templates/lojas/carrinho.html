@@ -3,10 +3,17 @@
 {% block title %}Lojinha - Carrinho{% endblock %}
 
 {% block content %}
-<h1>Meu Carrinho</h1>
-<ol>
-    {% for item in itens %}
-        <li> Produto: {{ item.produto.nome }}, Quantidade: {{ item.quantidade }}</li>
-    {% endfor %}
-</ol>
+    <h1>Meu Carrinho</h1>
+    <ol>
+        {% for item in itens %}
+            <li> Produto: {{ item.produto.nome }}, Quantidade: {{ item.quantidade }}</li>
+        {% endfor %}
+    </ol>
+    <form action="{% url 'lojas:finalizar_compra' %}" method="post">
+        {% csrf_token %}
+        {% if itens.count > 0 %}
+            <input type="submit" value="Finalizar Compra"/>
+        {% endif %}
+    </form>
 {% endblock %}
+
