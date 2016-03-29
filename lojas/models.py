@@ -47,8 +47,14 @@ class ItemCarrinho(models.Model):
         return self.produto.nome + ' (' + str(self.quantidade) + ')'
 
 
+class StatusPedido(models.Model):
+    nome = models.CharField(max_length=200)
+
+    def __str__(self):
+        return self.nome
+
 class Pedido(models.Model):
-    status = models.CharField(max_length=200, default='aguardando pagamento')
+    status = models.ForeignKey(StatusPedido, related_name="pedidos", default=1)
 
     def qtd_itens(self):
         return self.itens_pedido.count()
@@ -60,7 +66,7 @@ class Pedido(models.Model):
         return float(total)
 
     def __str__(self):
-        return "(id: %d) %d produtos, total: R$ %s" % (self.id, self.qtd_itens(), ("%01.2f" % self.custo_total()))
+        return "(%s) %d produtos, total: R$ %s" % (self.status.nome, self.qtd_itens(), ("%01.2f" % self.custo_total()))
 
 
 class ItemPedido(models.Model):
