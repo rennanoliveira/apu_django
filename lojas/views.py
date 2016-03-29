@@ -24,6 +24,14 @@ def add_produto(request, produto_id):
     return HttpResponseRedirect(reverse('lojas:carrinho'))
 
 
+def remove_produto(request):
+    item_id = request.POST['item_id']
+    carrinho = Carrinho.objects.get(pk=1)
+    item = get_object_or_404(carrinho.itens_carrinho, pk=item_id)
+    item.delete()
+    return HttpResponseRedirect(reverse('lojas:carrinho'))
+
+
 def carrinho(request):
     carrinho = Carrinho.objects.get(pk=1)
     itens = carrinho.itens_carrinho.all()

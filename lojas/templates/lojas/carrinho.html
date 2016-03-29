@@ -8,6 +8,11 @@
     <ol>
         {% for item in itens %}
             <li> Produto: {{ item.produto.nome }}, Quantidade: {{ item.quantidade }}</li>
+            <form action="{% url 'lojas:remove_produto'%}" method="post">
+                {% csrf_token %}
+                <input type="hidden" name="item_id" id="item_id" value="{{ item.id }}"/>
+                <input type="submit" value="Remover do Carrinho"/>
+            </form>
         {% endfor %}
     </ol>
     <form action="{% url 'lojas:finalizar_compra' %}" method="post">
