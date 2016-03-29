@@ -7,7 +7,7 @@
     <p style="color:red">{{ msg }}</p>
     <ol>
         {% for item in itens %}
-            <li> Produto: {{ item.produto.nome }}, Quantidade: {{ item.quantidade }}</li>
+            <li> {{ item }}</li>
             <form action="{% url 'lojas:remove_produto'%}" method="post">
                 {% csrf_token %}
                 <input type="hidden" name="item_id" id="item_id" value="{{ item.id }}"/>

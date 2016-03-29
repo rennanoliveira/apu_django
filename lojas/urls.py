@@ -5,6 +5,7 @@ from . import views
 app_name = 'lojas'
 urlpatterns = [
     url(r'^$', views.index, name='index'),
+    url(r'^signedin/$', views.signedin, name='signedin'),
     url(r'^carrinho/$', views.carrinho, name='carrinho'),
     url(r'^finalizar_compra/$', views.finalizar_compra, name='finalizar_compra'),
     url(r'^pedidos/$', views.pedidos, name='pedidos'),

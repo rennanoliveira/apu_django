@@ -1,7 +1,7 @@
 from __future__ import unicode_literals
 
 from django.db import models
-
+from django.contrib.auth.models import User
 
 class Produto(models.Model):
     nome = models.CharField(max_length=200)
@@ -16,6 +16,7 @@ class Produto(models.Model):
 
 
 class Carrinho(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="carrinho", default=2)
     def adicionar_produto(self, produto, quantidade):
         try:
             item = self.itens_carrinho.get(pk=produto.id)
@@ -44,8 +45,7 @@ class ItemCarrinho(models.Model):
     quantidade = models.IntegerField(default=1)
 
     def __str__(self):
-        return self.produto.nome + ' (' + str(self.quantidade) + ')'
-
+        return "%s (%s) Preco Unitario: R$ %s" % (self.produto.nome, str(self.quantidade), ("%01.2f" % self.produto.preco))
 
 class StatusPedido(models.Model):
     nome = models.CharField(max_length=200)

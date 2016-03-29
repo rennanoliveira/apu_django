@@ -1,4 +1,4 @@
-from .models import Pedido, Produto, ItemPedido
+from .models import Pedido, Produto, ItemPedido, Carrinho
 from django.db import transaction
 
 class CriadorPedido:
@@ -35,3 +35,16 @@ class CriadorPedido:
                 produto.remover_estoque(item.quantidade)
             pedido.save()
         return True
+
+
+class PegaCarrinho:
+    def __init__(self, user):
+        self.user = user
+
+    def carrinho(self):
+        try:
+            carrinho = Carrinho.objects.get(user_id=self.user.id)
+        except Carrinho.DoesNotExist:
+            carrinho = Carrinho(user=self.user)
+            carrinho.save()
+        return carrinho
