@@ -5,20 +5,22 @@
 </head>
 
 <body>
-    <div id="sidebar">
-        {% block sidebar %}
+<div id="sidebar">
+    {% block sidebar %}
         <h1>Apu's Kwik-E-Mart</h1>
         <nav>
-            <a href="{%  url 'lojas:index'%}">Produtos</a> |
-        <a href="{%  url 'lojas:carrinho'%}">Carrinho</a> |
-        <a href="{%  url 'lojas:pedidos'%}">Pedidos</a> |
+            <a href="{% url 'lojas:index' %}">Produtos</a> |
+            <a href="{% url 'lojas:carrinho' %}">Carrinho</a> |
+            <a href="{% url 'lojas:pedidos' %}">Pedidos</a> |
+            <a href="{% url 'logout' %}">Deslogar</a> |
+
         </nav>
 
-        {% endblock %}
-    </div>
+    {% endblock %}
+</div>
 
-    <div id="content">
-        {% block content %}{% endblock %}
-    </div>
+<div id="content">
+    {% block content %}{% endblock %}
+</div>
 </body>
 </html>
